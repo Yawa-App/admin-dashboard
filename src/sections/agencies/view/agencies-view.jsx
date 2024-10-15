@@ -26,10 +26,13 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 import useFormattedDate from 'src/hooks/useFormattedDate';
+import { useApp } from 'src/AppContext';
+import { useGetAllStatesQuery } from 'src/features/app/stateApi';
+import { useGetAllAgencyQuery } from 'src/features/app/agencyApi';
 
 // ----------------------------------------------------------------------
 
-export default function CircleView() {
+export default function AgenciesView() {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('name');
@@ -37,9 +40,18 @@ export default function CircleView() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
 
+  const { data: agencies, isLoading: agencyLoading, isError: agencyError } = useGetAllAgencyQuery()
+
+
+
   const { totalCircles, circles } = useCircle()
 
-  console.log(circles)
+  const { open, setOpen,
+    modalType, setModalType, } = useApp()
+
+  // Handle loading and error states for categories
+  if (agencyLoading) return <Typography>Loading...</Typography>;
+  if (agencyError) return <Typography>Error loading categories</Typography>;
 
 
 
@@ -66,7 +78,7 @@ export default function CircleView() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: circles,
+    inputData: agencies?.agencies,
     comparator: getComparator(order, orderBy),
     filterName,
   });
@@ -98,12 +110,16 @@ export default function CircleView() {
             size="small"
           />
           <Button
+            onClick={() => {
+              setModalType("create-agencies")
+              setOpen(true)
+            }}
             variant="contained"
-            style={{ background: "#03BDE9", width: "181px", height: "40px", borderRadius: "4px" }}
+            style={{ background: "#03BDE9", width: "201px", height: "40px", borderRadius: "4px" }}
             color="inherit"
             startIcon={<Iconify icon="eva:plus-fill" />}
           >
-            Create New Circle
+            Create New Agency
           </Button>
         </Stack>
       </Stack>
@@ -121,7 +137,7 @@ export default function CircleView() {
 
                 headLabel={[
                   { id: 'name', label: 'Name' },
-                  { id: 'No. of Members', label: 'No. of Members' },
+                  { id: 'email', label: 'email' },
                   { id: 'city', label: 'City' },
                   { id: 'Admin', label: 'Admin' },
                   { id: 'Created', label: 'Created' },
@@ -136,13 +152,13 @@ export default function CircleView() {
                     const formattedDate = formatDate(row?.createdAt);
                     return (
                       <UserTableRow
-                        key={row.id}
-                        name={row.name}
-                        member={row.members.length}
-                        city={row.city}
-                        state={row.state}
-                        number={row.phoneNumber}
-                        status={row.status}
+                        key={row?.id}
+                        name={row?.name}
+                        email={row?.email}
+                        city={row?.city}
+                        state={row?.state}
+                        number={row?.phoneNumber}
+                        status={row?.isEmailVerified}
                         created={formattedDate}
                       />
 

@@ -1,31 +1,27 @@
-import {  useState } from 'react';
-import PropTypes from 'prop-types'; 
-import { useResponder } from 'src/hooks/useResponder';
-import { emptyRows, applyFilter, getComparator } from '../utils';
+import { useState } from 'react';
 
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
+import Container from '@mui/material/Container';
+import InputAdornment from '@mui/material/InputAdornment';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
-import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-
 import TablePagination from '@mui/material/TablePagination';
-
-
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
+
+import { useResponder } from 'src/hooks/useResponder';
 
 import TableNoData from '../table-no-data';
 import UserTableRow from '../user-table-row';
 import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
-
+import { emptyRows, applyFilter, getComparator } from '../utils';
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +34,6 @@ export default function ResponderView() {
 
 
   const { responder} = useResponder()
-
 
 
 

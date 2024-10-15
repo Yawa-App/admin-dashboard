@@ -6,7 +6,8 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import Router from 'src/routes/sections';
 import ThemeProvider from 'src/theme';
-import {store,  persistor  } from './features/api/store';
+import { store, persistor } from './features/api/store';
+import { AppProvider } from './AppContext';
 
 // ----------------------------------------------------------------------
 
@@ -15,13 +16,14 @@ export default function App() {
 
   return (
     <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-    <ThemeProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider>
+          <AppProvider>
+            <Router />
 
-      <Router />
-
-    </ThemeProvider>
-    </PersistGate>
+          </AppProvider>
+        </ThemeProvider>
+      </PersistGate>
     </Provider>
   );
 }

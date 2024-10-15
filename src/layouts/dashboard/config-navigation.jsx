@@ -23,6 +23,16 @@ const navConfig = [
     icon: icon('shield'),
   },
   {
+    title: 'States',
+    path: '/state',
+    icon: icon('shield'),
+  },
+  {
+    title: 'Agency',
+    path: '/agency',
+    icon: icon('shield'),
+  },
+  {
     title: 'First Responders',
     path: '/first-responders',
     icon: icon('responder'),

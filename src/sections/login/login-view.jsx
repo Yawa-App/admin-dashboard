@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types'; 
+
 import { alpha, useTheme } from '@mui/material/styles';
 import { Box, Link, Card, Stack, TextField, Typography, IconButton, InputAdornment } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { useRouter } from 'src/routes/hooks';
+
 import { bgGradient } from 'src/theme/css';
-import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
+import Logo from 'src/components/logo';
 import { useAuth } from 'src/hooks/useAuth';
 
 // ----------------------------------------------------------------------

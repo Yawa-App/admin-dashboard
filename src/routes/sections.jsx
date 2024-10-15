@@ -5,7 +5,9 @@ import DashboardLayout from 'src/layouts/dashboard';
 
 const IndexPage = lazy(() => import('src/pages/app'));
 const UserPage = lazy(() => import('src/pages/user'));
+const AgenciesPage = lazy(() => import('src/pages/agencies'));
 const LoginPage = lazy(() => import('src/pages/login'));
+const StatePage = lazy(() => import('src/pages/state'));
 const CirclePage = lazy(() => import('src/pages/circle'));
 const ResponderPage = lazy(() => import('src/pages/responder'));
 const Page404 = lazy(() => import('src/pages/page-not-found'));
@@ -38,6 +40,8 @@ export default function Router() {
       children: [
         { path: 'dashboard', element: <IndexPage />, index: true },
         { path: 'user', element: <UserPage /> },
+        { path: 'state', element: <StatePage /> },
+        { path: 'agency', element: <AgenciesPage /> },
         { path: 'circles', element: <CirclePage /> },
         { path: 'first-responders', element: <ResponderPage /> },
       ],

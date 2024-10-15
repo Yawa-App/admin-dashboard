@@ -1,23 +1,27 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-
-import IconButton from '@mui/material/IconButton';
-import MenuItem from '@mui/material/MenuItem';
-import Popover from '@mui/material/Popover';
-import Stack from '@mui/material/Stack';
-import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
-
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import Popover from '@mui/material/Popover';
+import MenuItem from '@mui/material/MenuItem';
+import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
 export default function UserTableRow({
   name,
-  emerynum,
-  Handler,
-  Created,
+  email,
+  city,
+  number,
+  status,
+  created,
 }) {
   const [open, setOpen] = useState(null);
+  const [states, setStates] = useState("Lagos");
+  const [cities, setCities] = useState("Ikeja");
+
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
@@ -27,20 +31,25 @@ export default function UserTableRow({
     setOpen(null);
   };
 
+
+
   return (
     <>
       <TableRow hover tabIndex={-1}>
         <TableCell component="th" scope="row" padding="none">
           <Stack direction="row" alignItems="center">
-            <Typography variant="subtitle2" noWrap>
+            <Typography sx={{ px: 2 }} noWrap>
               {name}
             </Typography>
           </Stack>
         </TableCell>
 
-        <TableCell>{emerynum}</TableCell>
-        <TableCell>{Handler}</TableCell>
-        <TableCell>{Created}</TableCell>
+        <TableCell >{email}</TableCell>
+        <TableCell>{number || cities}</TableCell>
+        <TableCell>
+          <Label color={status ? 'success' : 'error'}>{status ? "success" : "pending"}</Label>
+        </TableCell>
+        <TableCell>{created}</TableCell>
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
@@ -75,7 +84,10 @@ export default function UserTableRow({
 
 UserTableRow.propTypes = {
   name: PropTypes.string.isRequired,
-  emerynum: PropTypes.string.isRequired,
-  Handler: PropTypes.string.isRequired,
-  Created: PropTypes.string.isRequired,
+  email: PropTypes.any.isRequired,
+  city: PropTypes.string.isRequired,
+  state: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  created: PropTypes.string.isRequired,
 };

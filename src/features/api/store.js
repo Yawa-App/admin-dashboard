@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { apiSlice } from 'src/features/app/apiSlice';
+import { otherApi } from '../app/otherApi';
 
 const persistConfig = {
   key: 'root',
@@ -11,6 +12,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
+  [otherApi.reducerPath]: otherApi.reducer,
   // Add other reducers here
 });
 
@@ -23,7 +25,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: ['persist/PERSIST'],
       },
-    }).concat(apiSlice.middleware),
+    }).concat(apiSlice.middleware, otherApi.middleware),
 });
 
 export const persistor = persistStore(store);

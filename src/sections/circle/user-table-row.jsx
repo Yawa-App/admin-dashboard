@@ -19,7 +19,8 @@ export default function UserTableRow({
   created,
 }) {
   const [open, setOpen] = useState(null);
-
+  const [states, setStates] = useState("Lagos");
+  const [cities, setCities] = useState("Ikeja");
 
 
   const handleOpenMenu = (event) => {
@@ -35,14 +36,14 @@ export default function UserTableRow({
       <TableRow hover tabIndex={-1}>
         <TableCell component="th" scope="row" padding="none">
           <Stack direction="row" alignItems="center">
-            <Typography variant="subtitle2" noWrap>
+            <Typography sx={{ px: 2 }} noWrap>
               {name}
             </Typography>
           </Stack>
         </TableCell>
 
-        <TableCell>{member}</TableCell>
-        <TableCell>{number}</TableCell>
+        <TableCell >{member}</TableCell>
+        <TableCell>{number || cities}</TableCell>
         <TableCell>
           <Label color={status === 'banned' ? 'error' : 'success'}>{status}success</Label>
         </TableCell>
