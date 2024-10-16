@@ -108,11 +108,11 @@ export default function UserTableRow({
           </Stack>
         </TableCell>
         <TableCell sx={{ paddingX: 2 }}>{email}</TableCell>
-        <TableCell sx={{ paddingX: 2 }}>{city}</TableCell>
-        <TableCell sx={{ paddingX: 2 }}>{state}</TableCell>
+        <TableCell sx={{ paddingX: 2 }}>{city || "Ileki"}</TableCell>
+        <TableCell sx={{ paddingX: 2 }}>{state || "Lagos"}</TableCell>
         <TableCell sx={{ paddingX: 2 }}>{number}</TableCell>
         <TableCell sx={{ paddingX: 2 }}>
-          <Label color={status ? 'success' : 'error'}> {status ? "success" : "pending"}</Label>
+          <Label color={status ? 'success' : 'error'}> {status ? "active" : "pending"}</Label>
         </TableCell>
         <TableCell sx={{ paddingX: 2 }}>{created}</TableCell>
         <TableCell align="right" sx={{ paddingX: 2 }}>

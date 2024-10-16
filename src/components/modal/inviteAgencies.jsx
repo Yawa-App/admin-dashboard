@@ -98,7 +98,7 @@ const InviteAgencies = () => {
                     </FormControl>
 
                     {/* Buttons: Cancel & Submit */}
-                    <Stack direction="row" spacing={2} alignSelf={"flex-end"}>
+                    <Stack direction="row" spacing={2} alignSelf="flex-end">
                         <Button onClick={() => {
                             setOpen(false)
                         }} sx={{ bgcolor: 'grey', color: "#000" }}>

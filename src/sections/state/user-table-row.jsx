@@ -14,13 +14,12 @@ export default function UserTableRow({
   name,
   email,
   city,
+  state,
   number,
   status,
   created,
 }) {
   const [open, setOpen] = useState(null);
-  const [states, setStates] = useState("Lagos");
-  const [cities, setCities] = useState("Ikeja");
 
 
   const handleOpenMenu = (event) => {
@@ -45,7 +44,7 @@ export default function UserTableRow({
         </TableCell>
 
         <TableCell >{email}</TableCell>
-        <TableCell>{number || cities}</TableCell>
+        <TableCell>{number || "Ikeji"}</TableCell>
         <TableCell>
           <Label color={status ? 'success' : 'error'}>{status ? "success" : "pending"}</Label>
         </TableCell>

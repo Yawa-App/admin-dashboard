@@ -1,35 +1,48 @@
 import { faker } from '@faker-js/faker';
-import { useUsers } from 'src/hooks/useUsers';
-import { useCircle } from 'src/hooks/useCircle';
-import Container from '@mui/material/Container';
+
+import { useGetUsersQuery } from 'src/features/app/userSlide';
+
+import { useGetCirclesQuery } from 'src/features/app/circleslide';
+
 import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
+
+import { Container, Typography } from '@mui/material';
+
 
 import AppTasks from '../app-tasks';
+
 import AppNewsUpdate from '../app-news-update';
+
 import AppOrderTimeline from '../app-order-timeline';
+
 import AppCurrentVisits from '../app-current-visits';
+
 import AppWebsiteVisits from '../app-website-visits';
+
 import AppWidgetSummary from '../app-widget-summary';
+
 import AppCurrentSubject from '../app-current-subject';
+
 import AppConversionRates from '../app-conversion-rates';
 
 
-// ----------------------------------------------------------------------
+
+
 
 export default function AppView() {
 
 
-  const { totalUsers } = useUsers()
-  const { totalCircles } = useCircle()
+
+
+  const { data: Users, isLoadind: userLoading, isError: userError } = useGetUsersQuery()
+  const { data: Circle, isLoadind: circleLoading, isError: circleError } = useGetCirclesQuery()
 
 
 
 
 
- 
-
-
+  if (userLoading || circleLoading) return <Typography>Loading....</Typography>
+  if (userError || circleError) return <Typography>Error with the endpoint....</Typography>
 
 
 
@@ -37,7 +50,7 @@ export default function AppView() {
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
         Welcome Edmund 👋 <br />
-        <span style={{fontSize: "16px", fontWeight: 500, color: "#4E5A66"}}>super admin</span>
+        <span style={{ fontSize: "16px", fontWeight: 500, color: "#4E5A66" }}>super admin</span>
       </Typography>
 
 
@@ -45,62 +58,62 @@ export default function AppView() {
 
 
       <Grid container spacing={3}>
-    <Grid item xs={12} sm={6} md={4}>
-      <AppWidgetSummary
-        title="Registered Users"
-        total={totalUsers}
-        color="success"
-        icon={<img alt="icon" src="/assets/icons/glass/ic_glass_bag.png" />}
-      />
-    </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <AppWidgetSummary
+            title="Registered Users"
+            total={Users?.data?.totalUsers}
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_bag.png" />}
+          />
+        </Grid>
 
-    <Grid item xs={12} sm={6} md={4}>
-      <AppWidgetSummary
-        title="Safety Circles"
-        total={totalCircles}
-        color="info"
-        icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />}
-      />
-    </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <AppWidgetSummary
+            title="Safety Circles"
+            total={Circle?.data?.totalCircles}
+            color="info"
+            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />}
+          />
+        </Grid>
 
-    <Grid item xs={12} sm={6} md={4}>
-      <AppWidgetSummary
-        title="Sub Admins"
-        total={12}
-        color="warning"
-        icon={<img alt="icon" src="/assets/icons/glass/ic_glass_buy.png" />}
-      />
-    </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <AppWidgetSummary
+            title="Sub Admins"
+            total={12}
+            color="warning"
+            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_buy.png" />}
+          />
+        </Grid>
 
-    <Grid item xs={12} sm={6} md={4}>
-      <AppWidgetSummary
-        title="Situational Reports"
-        total={943245}
-        color="error"
-        icon={<img alt="icon" src="/assets/icons/glass/ic_glass_message.png" />}
-      />
-    </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <AppWidgetSummary
+            title="Situational Reports"
+            total={943245}
+            color="error"
+            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_message.png" />}
+          />
+        </Grid>
 
-    <Grid item xs={12} sm={6} md={4}>
-      <AppWidgetSummary
-        title="SOS Prompts"
-        total={1245}
-        color="error"
-        icon={<img alt="icon" src="/assets/icons/glass/ic_glass_message.png" />}
-      />
-    </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <AppWidgetSummary
+            title="SOS Prompts"
+            total={1245}
+            color="error"
+            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_message.png" />}
+          />
+        </Grid>
 
-    <Grid item xs={12} sm={6} md={4}>
-      <AppWidgetSummary
-        title="Safety Org. Accounts"
-        total={5}
-        color="error"
-        icon={<img alt="icon" src="/assets/icons/glass/ic_glass_message.png" />}
-      />
-    </Grid>
- 
+        <Grid item xs={12} sm={6} md={4}>
+          <AppWidgetSummary
+            title="Safety Org. Accounts"
+            total={5}
+            color="error"
+            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_message.png" />}
+          />
+        </Grid>
 
-        
+
+
 
 
         <Grid xs={12} md={6} lg={8}>
@@ -225,7 +238,7 @@ export default function AppView() {
           />
         </Grid>
 
-        
+
 
         <Grid xs={12} md={6} lg={8}>
           <AppTasks

@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useCircle } from 'src/hooks/useCircle';
+import { useState } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -11,11 +9,14 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TextField from '@mui/material/TextField';
+import { ToastContainer } from 'react-toastify';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import TablePagination from '@mui/material/TablePagination';
+import { useApp } from 'src/AppContext';
+import { useGetAllStatesQuery } from 'src/features/app/stateApi';
 
-
+import useFormattedDate from 'src/hooks/useFormattedDate';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -25,9 +26,9 @@ import UserTableRow from '../user-table-row';
 import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import { emptyRows, applyFilter, getComparator } from '../utils';
-import useFormattedDate from 'src/hooks/useFormattedDate';
-import { useApp } from 'src/AppContext';
-import { useGetAllStatesQuery } from 'src/features/app/stateApi';
+
+
+
 
 // ----------------------------------------------------------------------
 
@@ -38,13 +39,13 @@ export default function StateView() {
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-
+  const formatDate = useFormattedDate();
   const { data: states, isLoading: stateLoading, isError: stateError } = useGetAllStatesQuery()
 
-  const { totalCircles, circles } = useCircle()
 
-  const { open, setOpen,
-    modalType, setModalType, } = useApp()
+  const { setOpen, setModalType, } = useApp()
+
+
 
   // Handle loading and error states for categories
   if (stateLoading) return <Typography>Loading...</Typography>;
@@ -81,12 +82,12 @@ export default function StateView() {
   });
 
 
-  const formatDate = useFormattedDate();
-
   const notFound = !dataFiltered.length && !!filterName;
 
   return (
     <Container>
+      <ToastContainer />
+
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography style={{ marginBottom: 40 }} variant="h4">Safety Circles <br /> <span style={{ color: '#292727', fontSize: "16px", fontWeight: 400, lineHeight: "19.36px" }}>Manage sfaety circles created by Yawa users.</span></Typography>
 
@@ -128,7 +129,7 @@ export default function StateView() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={totalCircles}
+                rowCount={states?.total}
                 numSelected={0} // No selected rows since we're not using checkboxes
                 onRequestSort={handleSort}
 
@@ -165,7 +166,7 @@ export default function StateView() {
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, totalCircles)}
+                  emptyRows={emptyRows(page, rowsPerPage, states?.total)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}
@@ -177,7 +178,7 @@ export default function StateView() {
         <TablePagination
           page={page}
           component="div"
-          count={totalCircles}
+          count={states?.total}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}

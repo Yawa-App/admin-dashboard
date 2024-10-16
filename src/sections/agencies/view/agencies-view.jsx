@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { useCircle } from 'src/hooks/useCircle';
-
+import useFormattedDate from 'src/hooks/useFormattedDate';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
@@ -16,7 +15,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TablePagination from '@mui/material/TablePagination';
 
 
-
+import { useGetAllAgencyQuery } from 'src/features/app/agencyApi';
+import { useApp } from 'src/AppContext';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 
@@ -25,12 +25,13 @@ import UserTableRow from '../user-table-row';
 import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import { emptyRows, applyFilter, getComparator } from '../utils';
-import useFormattedDate from 'src/hooks/useFormattedDate';
-import { useApp } from 'src/AppContext';
-import { useGetAllStatesQuery } from 'src/features/app/stateApi';
-import { useGetAllAgencyQuery } from 'src/features/app/agencyApi';
+
+
+
 
 // ----------------------------------------------------------------------
+
+
 
 export default function AgenciesView() {
   const [page, setPage] = useState(0);
@@ -39,20 +40,18 @@ export default function AgenciesView() {
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
+  const formatDate = useFormattedDate();
 
   const { data: agencies, isLoading: agencyLoading, isError: agencyError } = useGetAllAgencyQuery()
 
 
 
-  const { totalCircles, circles } = useCircle()
 
-  const { open, setOpen,
-    modalType, setModalType, } = useApp()
+  const { setOpen, setModalType, } = useApp()
 
   // Handle loading and error states for categories
   if (agencyLoading) return <Typography>Loading...</Typography>;
   if (agencyError) return <Typography>Error loading categories</Typography>;
-
 
 
 
@@ -84,20 +83,20 @@ export default function AgenciesView() {
   });
 
 
-  const formatDate = useFormattedDate();
+
 
   const notFound = !dataFiltered.length && !!filterName;
 
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography style={{ marginBottom: 40 }} variant="h4">Safety Circles <br /> <span style={{ color: '#292727', fontSize: "16px", fontWeight: 400, lineHeight: "19.36px" }}>Manage sfaety circles created by Yawa users.</span></Typography>
+        <Typography style={{ marginBottom: 40 }} variant="h4">Agency <br /> <span style={{ color: '#292727', fontSize: "16px", fontWeight: 400, lineHeight: "19.36px" }}>Manage Agencies created by Yawa.</span></Typography>
 
         <Stack direction="row" spacing={2}>
           <TextField
             value={filterName}
             onChange={handleFilterByName}
-            placeholder="Search safety circle"
+            placeholder="Search agency"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -131,7 +130,7 @@ export default function AgenciesView() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={totalCircles}
+                rowCount={agencies?.total}
                 numSelected={0} // No selected rows since we're not using checkboxes
                 onRequestSort={handleSort}
 
@@ -168,7 +167,7 @@ export default function AgenciesView() {
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, totalCircles)}
+                  emptyRows={emptyRows(page, rowsPerPage, agencies?.total)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}
@@ -180,7 +179,7 @@ export default function AgenciesView() {
         <TablePagination
           page={page}
           component="div"
-          count={totalCircles}
+          count={agencies?.total}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}

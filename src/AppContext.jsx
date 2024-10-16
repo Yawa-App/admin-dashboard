@@ -1,4 +1,6 @@
-import React, { useState, useMemo, createContext, useContext, } from 'react';
+import PropTypes from 'prop-types';
+import React, { useMemo, useState, useContext, createContext, } from 'react';
+// Import PropTypes at the top of your file
 
 // Create the context
 const AppContext = createContext({
@@ -45,6 +47,11 @@ export const AppProvider = ({ children }) => {
             {children}
         </AppContext.Provider>
     );
+};
+
+// Add PropTypes validation for children
+AppProvider.propTypes = {
+    children: PropTypes.node.isRequired
 };
 
 // Custom hook to use the context

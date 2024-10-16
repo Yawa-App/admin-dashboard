@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import useFormattedDate from 'src/hooks/useFormattedDate';
+import { useUsers } from 'src/hooks/useUsers';
 
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -15,14 +16,13 @@ import Typography from '@mui/material/Typography';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 
-import { useUsers } from 'src/hooks/useUsers';
+
 
 import TableNoData from '../table-no-data';
 import UserTableRow from '../user-table-row';
 import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import { emptyRows, applyFilter, getComparator } from '../utils';
-import useFormattedDate from 'src/hooks/useFormattedDate';
 
 // ----------------------------------------------------------------------
 
@@ -32,9 +32,6 @@ export default function UserPage() {
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [states, setStates] = useState("Lagos");
-  const [cities, setCities] = useState("Ikeja");
-  const [status, setStatus] = useState("successful");
 
   const { totalUsers, userdata } = useUsers();
   const formatDate = useFormattedDate();
@@ -124,8 +121,8 @@ export default function UserPage() {
                         key={row.id}
                         name={row.name}
                         email={row.email}
-                        city={row.city || cities}
-                        state={row.state || states}
+                        city={row.city}
+                        state={row.state}
                         number={row.phoneNumber}
                         status={row.isEmailVerified}
                         created={formattedDate}

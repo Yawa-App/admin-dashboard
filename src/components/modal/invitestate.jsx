@@ -81,18 +81,14 @@ const Invitestate = () => {
                             <MenuItem value="">
                                 <em>Select a category</em>
                             </MenuItem>
-                            {categories?.map((item, index) => {
-                                return (
-                                    <MenuItem key={index} value={item}>{item}</MenuItem>
-                                )
-                            }
-
-                            )}
+                            {categories?.map((item, index) => (
+                                <MenuItem key={index} value={item}>{item}</MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
 
                     {/* Buttons: Cancel & Submit */}
-                    <Stack direction="row" spacing={2} alignSelf={"flex-end"}>
+                    <Stack direction="row" spacing={2} alignSelf="flex-end">
                         <Button onClick={() => {
                             setOpen(false)
                         }} sx={{ bgcolor: 'grey', color: "#000" }}>

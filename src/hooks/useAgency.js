@@ -4,7 +4,6 @@ import { useCreateagencyMutation, useGetAllAgencyQuery } from "src/features/app/
 
 
 export const useAgency = () => {
-
     const { setOpen } = useApp()
     const [createagency, { isLoading: agencyLoading, isError, error: iserror }] = useCreateagencyMutation()
     const { data: agency, refetch: refetchAgency } = useGetAllAgencyQuery()

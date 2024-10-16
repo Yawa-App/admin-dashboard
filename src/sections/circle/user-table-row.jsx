@@ -19,8 +19,7 @@ export default function UserTableRow({
   created,
 }) {
   const [open, setOpen] = useState(null);
-  const [states, setStates] = useState("Lagos");
-  const [cities, setCities] = useState("Ikeja");
+
 
 
   const handleOpenMenu = (event) => {
@@ -43,7 +42,7 @@ export default function UserTableRow({
         </TableCell>
 
         <TableCell >{member}</TableCell>
-        <TableCell>{number || cities}</TableCell>
+        <TableCell>{number || "Ikeja"}</TableCell>
         <TableCell>
           <Label color={status === 'banned' ? 'error' : 'success'}>{status}success</Label>
         </TableCell>
@@ -84,7 +83,7 @@ UserTableRow.propTypes = {
   name: PropTypes.string.isRequired,
   member: PropTypes.any.isRequired,
   city: PropTypes.string.isRequired,
-  state: PropTypes.string.isRequired,
+  // state: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,

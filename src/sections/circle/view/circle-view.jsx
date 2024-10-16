@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { useCircle } from 'src/hooks/useCircle';
 
 import Card from '@mui/material/Card';
@@ -15,7 +14,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import TablePagination from '@mui/material/TablePagination';
 
-
+import useFormattedDate from 'src/hooks/useFormattedDate';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -25,7 +24,7 @@ import UserTableRow from '../user-table-row';
 import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import { emptyRows, applyFilter, getComparator } from '../utils';
-import useFormattedDate from 'src/hooks/useFormattedDate';
+
 
 // ----------------------------------------------------------------------
 
@@ -36,10 +35,11 @@ export default function CircleView() {
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
+  const formatDate = useFormattedDate();
+
 
   const { totalCircles, circles } = useCircle()
 
-  console.log(circles)
 
 
 
@@ -72,7 +72,6 @@ export default function CircleView() {
   });
 
 
-  const formatDate = useFormattedDate();
 
   const notFound = !dataFiltered.length && !!filterName;
 
@@ -123,6 +122,7 @@ export default function CircleView() {
                   { id: 'name', label: 'Name' },
                   { id: 'No. of Members', label: 'No. of Members' },
                   { id: 'city', label: 'City' },
+                  { id: 'state', label: 'State' },
                   { id: 'Admin', label: 'Admin' },
                   { id: 'Created', label: 'Created' },
                   { id: '', label: '' },
@@ -132,16 +132,15 @@ export default function CircleView() {
               <TableBody>
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
+                  .map((row, index) => {
                     const formattedDate = formatDate(row?.createdAt);
                     return (
                       <UserTableRow
-                        key={row.id}
+                        key={index}
                         name={row.name}
                         member={row.members.length}
                         city={row.city}
                         state={row.state}
-                        number={row.phoneNumber}
                         status={row.status}
                         created={formattedDate}
                       />

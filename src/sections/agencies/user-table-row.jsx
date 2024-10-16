@@ -19,8 +19,7 @@ export default function UserTableRow({
   created,
 }) {
   const [open, setOpen] = useState(null);
-  const [states, setStates] = useState("Lagos");
-  const [cities, setCities] = useState("Ikeja");
+
 
 
   const handleOpenMenu = (event) => {
@@ -45,9 +44,9 @@ export default function UserTableRow({
         </TableCell>
 
         <TableCell >{email}</TableCell>
-        <TableCell>{number || cities}</TableCell>
+        <TableCell>{number || "Ikeja"}</TableCell>
         <TableCell>
-          <Label color={status ? 'success' : 'error'}>{status ? "success" : "pending"}</Label>
+          <Label color={status ? 'success' : 'error'}>{status ? "active" : "pending"}</Label>
         </TableCell>
         <TableCell>{created}</TableCell>
 
@@ -86,7 +85,6 @@ UserTableRow.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.any.isRequired,
   city: PropTypes.string.isRequired,
-  state: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
