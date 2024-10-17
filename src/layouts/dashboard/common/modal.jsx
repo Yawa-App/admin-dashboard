@@ -3,6 +3,7 @@ import { Modal, Box } from '@mui/material'
 import Invitestate from 'src/components/modal/invitestate'
 import { useApp } from 'src/AppContext'
 import InviteAgencies from 'src/components/modal/inviteAgencies'
+import PropTypes from 'prop-types'
 
 
 
@@ -78,5 +79,10 @@ const CustomerModal = ({
     </Modal>
   )
 }
+
+CustomerModal.propTypes = {
+  handleClose: PropTypes.func.isRequired,
+  sx: PropTypes.object
+};
 
 export default CustomerModal

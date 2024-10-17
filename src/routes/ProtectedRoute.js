@@ -4,16 +4,10 @@ import { useRouter } from './hooks';
 
 const ProtectedRoute = () => {
 	const token = localStorage.getItem('accessToken');
-	const router = useRouter();
-	// const location = useLocation();
-	
+	const router = useRouter(); // If router is not used, consider removing this line.
 	if (!token) {
-		console.log("not login it");
-		// Redirect to login page or show an error message
-		// You can use the router here if needed
-		return null;
+		// Redirect logic here
 	}
-
 	return <Outlet />;
 };
 

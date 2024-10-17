@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-
+import { useState } from 'react';
 import { alpha, useTheme } from '@mui/material/styles';
 import { Box, Link, Card, Stack, TextField, Typography, IconButton, InputAdornment } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-
 import { bgGradient } from 'src/theme/css';
-import Iconify from 'src/components/iconify';
 import Logo from 'src/components/logo';
+import Iconify from 'src/components/iconify';
 import { useAuth } from 'src/hooks/useAuth';
 
 // ----------------------------------------------------------------------
@@ -20,18 +18,18 @@ export default function LoginView() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const {handlelogin} = useAuth()
+  const { handlelogin } = useAuth()
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
     setLoading(true);
-    await handlelogin(email, password, setLoading,setError )
+    await handlelogin(email, password, setLoading, setError)
 
- 
+
   };
 
-  
-  
+
+
 
   const isEmailValid = emailAddress => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailAddress);
 

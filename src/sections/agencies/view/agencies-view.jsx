@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useCircle } from 'src/hooks/useCircle';
 import useFormattedDate from 'src/hooks/useFormattedDate';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';

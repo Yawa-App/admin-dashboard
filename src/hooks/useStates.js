@@ -15,7 +15,6 @@ export const useStates = () => {
         }
         console.log(credentials)
 
-        // notify('Operation successful!', { type: 'success' });
         try {
 
             const response = await createstate(credentials).unwrap()

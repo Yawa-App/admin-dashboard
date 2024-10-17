@@ -1,4 +1,3 @@
-
 import { Helmet } from 'react-helmet-async';
 import { StateView } from 'src/sections/state/view';
 
