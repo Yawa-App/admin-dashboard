@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useCircle } from 'src/hooks/useCircle';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -11,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-
+import { useGetCirclesQuery } from 'src/features/app/circleslide';
 import TablePagination from '@mui/material/TablePagination';
 
 import useFormattedDate from 'src/hooks/useFormattedDate';
@@ -26,6 +25,7 @@ import TableEmptyRows from '../table-empty-rows';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 
 
+
 // ----------------------------------------------------------------------
 
 export default function CircleView() {
@@ -38,9 +38,19 @@ export default function CircleView() {
   const formatDate = useFormattedDate();
 
 
-  const { totalCircles, circles } = useCircle()
+
+  const {
+    data: circles,
+    isLoading,
+    isError,
+  } = useGetCirclesQuery();
+
+  const totalCircles = circles?.data?.totalCircles || 0;
 
 
+
+  if (isLoading) return <Typography>Loading....</Typography>
+  if (isError) return <Typography>Error with the endpoint....</Typography>
 
 
 

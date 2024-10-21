@@ -3,14 +3,17 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { apiSlice } from 'src/features/app/apiSlice';
 import { otherApi } from '../app/otherApi';
+import authReducer from '../slide/authSlice';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['someOtherReducer'], // Add any reducers you want to persist here
+  whitelist: ['auth'], // Ensure 'auth' is included if you want to persist the auth state
 };
 
+// Properly combine reducers before passing them to persistReducer
 const rootReducer = combineReducers({
+  auth: authReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
   [otherApi.reducerPath]: otherApi.reducer,
   // Add other reducers here
@@ -19,7 +22,7 @@ const rootReducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: persistedReducer, // Use the persistedReducer as the root reducer
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

@@ -6,8 +6,8 @@ import { toast } from "react-toastify"
 
 export const useStates = () => {
     const { setOpen } = useApp()
-    const [createstate, { isLoading: stateLoading, isError, error: iserror }] = useCreatestateMutation()
-    const { data: states, refetch: refetchState } = useGetAllStatesQuery()
+    const [createstate, { isLoading: stateLoading, }] = useCreatestateMutation()
+    const { refetch: refetchState } = useGetAllStatesQuery()
     const handleinvitestate = async (name, email) => {
 
         const credentials = {

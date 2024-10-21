@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Modal, Box } from '@mui/material'
 import Invitestate from 'src/components/modal/invitestate'
 import { useApp } from 'src/AppContext'
@@ -12,16 +12,9 @@ const CustomerModal = ({
   handleClose,
   sx
 }) => {
-  const [selectedCountry, setSelectedCountry] = useState('')
-  const [branchName, setBranchName] = useState('')
-  const [seletedbranch, setSeletedBranch] = useState('')
-  const [Fullname, setFullname] = useState('')
-  const [Email, setEmail] = useState('')
-  const [seletedRole, setSeletedRole] = useState('')
 
   const { open, modalType, } = useApp()
 
-  // const { handleInviteUser, isInviting, handleInviteOrderRoles } = useInvite()
 
   const getModalHeight = () => {
     switch (modalType) {

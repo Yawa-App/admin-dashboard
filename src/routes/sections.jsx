@@ -1,7 +1,12 @@
 import { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
+import { useSelector, useStore } from 'react-redux';
 
 import DashboardLayout from 'src/layouts/dashboard';
+import { isAuthorized } from 'src/features/slide/authSlice';
+import ProtectedRoute from './ProtectedRoute';
+
+import renderLoginOrRedirect from './routeHelpers';
 
 const IndexPage = lazy(() => import('src/pages/app'));
 const UserPage = lazy(() => import('src/pages/user'));
@@ -15,6 +20,12 @@ const Page404 = lazy(() => import('src/pages/page-not-found'));
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  const store = useStore();
+  console.log('Current Redux State:', store.getState()); // This will log the entire Redux state
+
+  const isUserLoggedIn = useSelector(isAuthorized);
+  console.log('Is User Logged In:', isUserLoggedIn);
+
   const routes = useRoutes([
     {
       path: '/',
@@ -22,20 +33,17 @@ export default function Router() {
     },
     {
       path: 'login',
-      element: (
-        <Suspense fallback={<div>Loading...</div>}>
-          <LoginPage />
-        </Suspense>
-      ),
+      element: (renderLoginOrRedirect(isUserLoggedIn, <LoginPage />)),
     },
     {
       element: (
-
-        <DashboardLayout>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Outlet />
-          </Suspense>
-        </DashboardLayout>
+        <ProtectedRoute isAuthenticated={isUserLoggedIn}  >
+          <DashboardLayout>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Outlet />
+            </Suspense>
+          </DashboardLayout>
+        </ProtectedRoute>
       ),
       children: [
         { path: 'dashboard', element: <IndexPage />, index: true },
