@@ -46,13 +46,15 @@ export default function AgenciesView() {
 
 
 
+
   const { setOpen, setModalType, } = useApp()
 
   // Handle loading and error states for categories
   if (agencyLoading) return <Typography>Loading...</Typography>;
-  if (agencyError) return <Typography>Error loading categories</Typography>;
+  if (agencyError) return <Typography>Error loading, Can not get agencies endpoint</Typography>;
 
 
+  console.log(agencies)
 
 
   const handleSort = (event, id) => {

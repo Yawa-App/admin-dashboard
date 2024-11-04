@@ -6,10 +6,22 @@ import Typography from '@mui/material/Typography';
 import { RouterLink } from 'src/routes/components';
 
 import Logo from 'src/components/logo';
+import { logOut } from 'src/features/slide/authSlice';
+import { useDispatch } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
 export default function NotFoundView() {
+
+  const dispatch = useDispatch();
+
+  const handlelogout = () => {
+    dispatch(logOut())
+  }
+
+
+
+
   const renderHeader = (
     <Box
       component="header"
@@ -63,7 +75,7 @@ export default function NotFoundView() {
             }}
           />
 
-          <Button href="/" size="large" variant="contained" component={RouterLink}>
+          <Button onClick={handlelogout} href="/" size="large" variant="contained" component={RouterLink}>
             Go to Home
           </Button>
         </Box>

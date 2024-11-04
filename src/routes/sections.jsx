@@ -33,7 +33,8 @@ export default function Router() {
     },
     {
       path: 'login',
-      element: (renderLoginOrRedirect(isUserLoggedIn, <LoginPage />)),
+      element: (<LoginPage />),
+      // element: (renderLoginOrRedirect(isUserLoggedIn, <LoginPage />)),
     },
     {
       element: (

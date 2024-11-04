@@ -37,23 +37,19 @@ export default function CircleView() {
 
   const formatDate = useFormattedDate();
 
+  const { data: circles, isLoadind: circleLoading, isError: circleError } = useGetCirclesQuery()
 
 
-  const {
-    data: circles,
-    isLoading,
-    isError,
-  } = useGetCirclesQuery();
+
+
+
+
+
+  if (circleLoading) return <Typography>Loading....</Typography>
+  if (circleError) return <Typography>Error with the endpoint....</Typography>
+  console.log(circles)
 
   const totalCircles = circles?.data?.totalCircles || 0;
-
-
-
-  if (isLoading) return <Typography>Loading....</Typography>
-  if (isError) return <Typography>Error with the endpoint....</Typography>
-
-
-
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -76,14 +72,14 @@ export default function CircleView() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: circles,
+    inputData: circles?.data?.circles,
     comparator: getComparator(order, orderBy),
     filterName,
   });
 
 
 
-  const notFound = !dataFiltered.length && !!filterName;
+  const notFound = !dataFiltered?.length && !!filterName;
 
   return (
     <Container>
@@ -140,18 +136,17 @@ export default function CircleView() {
                 ]}
               />
               <TableBody>
-                {dataFiltered
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                {dataFiltered?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     const formattedDate = formatDate(row?.createdAt);
                     return (
                       <UserTableRow
                         key={index}
-                        name={row.name}
-                        member={row.members.length}
-                        city={row.city}
-                        state={row.state}
-                        status={row.status}
+                        name={row?.name}
+                        member={row.members?.length}
+                        city={row?.city}
+                        state={row?.state}
+                        status={row?.status}
                         created={formattedDate}
                       />
 

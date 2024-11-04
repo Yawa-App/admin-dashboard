@@ -49,9 +49,10 @@ export default function StateView() {
 
   // Handle loading and error states for categories
   if (stateLoading) return <Typography>Loading...</Typography>;
-  if (stateError) return <Typography>Error loading categories</Typography>;
+  if (stateError) return <Typography>Error loading Can&apos;t get state endpoint</Typography>;
 
 
+  console.log(states)
 
 
 
@@ -82,7 +83,7 @@ export default function StateView() {
   });
 
 
-  const notFound = !dataFiltered.length && !!filterName;
+  const notFound = !dataFiltered?.length && !!filterName;
 
   return (
     <Container>
@@ -144,8 +145,7 @@ export default function StateView() {
                 ]}
               />
               <TableBody>
-                {dataFiltered
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                {dataFiltered?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => {
                     const formattedDate = formatDate(row?.createdAt);
                     return (

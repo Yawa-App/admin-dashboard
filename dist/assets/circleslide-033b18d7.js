@@ -1,0 +1,1 @@
+import{a2 as i}from"./index-b06e9d0b.js";const r=i.injectEndpoints({endpoints:e=>({getCircles:e.query({query:()=>({url:"/api/admin/circles",method:"GET",params:{page:1,limit:30}})})})}),{useGetCirclesQuery:t}=r;export{t as u};

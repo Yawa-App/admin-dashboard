@@ -41,9 +41,9 @@ export default function AppView() {
 
 
 
+
   if (userLoading || circleLoading) return <Typography>Loading....</Typography>
   if (userError || circleError) return <Typography>Error with the endpoint....</Typography>
-
 
 
   return (

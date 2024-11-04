@@ -1,7 +1,9 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { persistStore, persistReducer } from 'redux-persist';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+
 import { apiSlice } from 'src/features/app/apiSlice';
+
 import { otherApi } from '../app/otherApi';
 import authReducer from '../slide/authSlice';
 

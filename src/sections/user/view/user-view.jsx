@@ -15,7 +15,7 @@ import Typography from '@mui/material/Typography';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
-
+import { useGetUsersQuery } from 'src/features/app/userSlide';
 
 
 import TableNoData from '../table-no-data';
@@ -23,6 +23,7 @@ import UserTableRow from '../user-table-row';
 import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import { emptyRows, applyFilter, getComparator } from '../utils';
+
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +34,10 @@ export default function UserPage() {
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const { totalUsers, userdata } = useUsers();
+  const { data, isLoading, isError } = useGetUsersQuery()
+
+
+
   const formatDate = useFormattedDate();
 
   const handleSort = (event, id) => {
@@ -57,10 +61,16 @@ export default function UserPage() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: userdata,
+    inputData: data?.data?.users,
     comparator: getComparator(order, orderBy),
     filterName,
   });
+
+
+  if (isLoading) return <Typography>Loading...</Typography>;
+  if (isError) return <Typography>Error loading Can&apos;t get state endpoint</Typography>;
+
+
 
   const notFound = !dataFiltered.length && !!filterName;
 
@@ -96,7 +106,7 @@ export default function UserPage() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={totalUsers}
+                rowCount={data?.data?.totalUsers}
                 numSelected={0}
                 onRequestSort={handleSort}
                 headLabel={[
@@ -133,7 +143,7 @@ export default function UserPage() {
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, totalUsers)}
+                  emptyRows={emptyRows(page, rowsPerPage, data?.data?.totalUsers)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}
@@ -145,7 +155,7 @@ export default function UserPage() {
         <TablePagination
           page={page}
           component="div"
-          count={totalUsers}
+          count={data?.data?.totalUsers}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}
